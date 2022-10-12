@@ -1,0 +1,25 @@
+﻿@page
+@model AdminEmentor.Pages.AboutModel
+@{
+    ViewData["Title"] = "Number of Registered Students";
+}
+<h2>Number of Registered Students</h2>
+<table>
+    <tr>
+        <th>Enrollment Date</th>
+        <th></th>
+        <th>Students</th>
+    </tr>
+    @foreach (var item in Model.Students)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnrollmentDate)
+            </td>
+            <td></td>
+            <td>
+                @item.StudentCount
+            </td>
+        </tr>
+    }
+</table>

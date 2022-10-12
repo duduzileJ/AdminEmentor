@@ -1,0 +1,79 @@
+﻿@page
+@model AdminEmentor.Pages.Tutors.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Tutor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tutor.FirstName" class="control-label"></label>
+                <input asp-for="Tutor.FirstName" class="form-control" />
+                <span asp-validation-for="Tutor.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tutor.LastName" class="control-label"></label>
+                <input asp-for="Tutor.LastName" class="form-control" />
+                <span asp-validation-for="Tutor.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tutor.Email" class="control-label"></label>
+                <input asp-for="Tutor.Email" class="form-control" />
+                <span asp-validation-for="Tutor.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tutor.ContactNumber" class="control-label"></label>
+                <input asp-for="Tutor.ContactNumber" class="form-control" />
+                <span asp-validation-for="Tutor.ContactNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tutor.HireDate" class="control-label"></label>
+                <input asp-for="Tutor.HireDate" class="form-control" />
+                <span asp-validation-for="Tutor.HireDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int count = 0;
+                                foreach(var subject in Model.AssignedSubjectDataList)
+                                {
+                                    if(count ++%3 ==0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                    <input type="checkbox"
+                                    name="selectedSubjects"
+                                    value="@subject.SubjectID"
+                                    @(Html.Raw(subject.Assigned ? "checked=\" checked\"" : "")) />
+                                    @:</td>
+                                }
+                                @:</tr>
+                            }
+                       
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

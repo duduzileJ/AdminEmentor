@@ -1,0 +1,113 @@
+﻿@page "{id:int?}"
+@model AdminEmentor.Pages.Tutors.IndexModel
+
+@{
+    ViewData["Title"] = "Tutors";
+}
+
+<h1>Tutors</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+           <th>First Name</th>
+           <th>Last Name</th>
+           <th>Email Address</th>
+           <th>Contact Number</th>
+           <th>Hire Date</th>
+         
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TutorData.Tutors) {
+            string selectedRow = "";
+            if(item.TutorID == Model.TutorID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HireDate)
+            </td>
+            <td>
+                <a asp-page="./Index" asp-route-id="@item.TutorID">Select</a> | 
+                <a asp-page="./Edit" asp-route-id="@item.TutorID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.TutorID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.TutorID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@if(Model.TutorData.Subjects != null)
+{
+    <h3>Subjects Taught by selected Tutor</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Subject ID</th>
+            <th>Title</th>
+            <th>Department</th>
+        </tr>
+        @foreach(var item in Model.TutorData.Subjects)
+        {
+            string selectedRow = "";
+            if(item.SubjectID == Model.SubjectID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    <a asp-page="./Index" asp-route-subjectID="@item.SubjectID">Select </a> |
+                </td>
+                <td>
+                    @item.SubjectID
+                </td>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Department.Name
+                </td>
+            </tr>
+        }
+    </table>
+
+    if(Model.TutorData.Enrollments != null)
+    {
+        <h3>Students Enrolled in Selected Subject</h3>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Grade</th>
+            </tr>
+            @foreach(var item in Model.TutorData.Enrollments)
+            {
+                <tr>
+                    <td>
+                        @item.Student.FullName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Grade)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+}
